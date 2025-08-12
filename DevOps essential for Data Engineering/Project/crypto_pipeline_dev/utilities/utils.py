@@ -1,6 +1,8 @@
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 from pyspark.sql import Window as W
+from pyspark.sql import types as T
+from pyspark.testing import assertSchemaEqual
 
 spark = SparkSession.builder.appName("main_mini_project").getOrCreate()
 
@@ -40,3 +42,8 @@ def agg(df):
     .orderBy(["Symbol", "Date"])
 
     return df 
+
+def check_schema(df, target_schema):
+    source_schema = df.schema
+    assertSchemaEqual(source_schema, target_schema, ignoreColumnOrder=True)
+    

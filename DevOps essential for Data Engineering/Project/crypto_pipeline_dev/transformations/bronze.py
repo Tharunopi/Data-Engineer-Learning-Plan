@@ -1,9 +1,11 @@
 import dlt, sys, os
-from utilities.utils import *
+from utilities.utils import get_files_incrementally
+
+catalog = spark.conf.get("catalog")
 
 @dlt.table(
-    name="dev.bronze.crypto_data"
+    name=f"{catalog}.bronze.crypto_data"
 )
 def ingesting_data():
-    df = get_files_incrementally(catalog="dev", schema="default", volume="crypto")
+    df = get_files_incrementally(catalog=catalog, schema="default", volume="crypto")
     return df 
