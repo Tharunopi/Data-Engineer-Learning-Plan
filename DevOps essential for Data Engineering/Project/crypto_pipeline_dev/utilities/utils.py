@@ -35,8 +35,8 @@ def per_year(df):
 def agg(df):
     df = df.groupBy(["Symbol", "Date"]).agg(
         F.sum("Volume").alias("total_volume"),
-        F.abs(((F.max(F.col("Volume")) - F.min(F.col("Volume"))) / (F.min(F.col("min")))) * 100).alias("volatile_percentage")
+        F.abs(((F.max(F.col("Volume")) - F.min(F.col("Volume"))) / (F.min(F.col("Volume")))) * 100).alias("volatile_percentage")
     ) \
-    .orderBy(F.col("volatile_percentage"))
+    .orderBy(["Symbol", "Date"])
 
     return df 
