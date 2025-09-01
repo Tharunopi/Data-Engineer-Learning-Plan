@@ -1,0 +1,41 @@
+bundle:
+  name: "deploying_to_multiple_environments"
+
+include:
+  - resources/*.yml
+  - resources/*/*.yml
+
+targets:
+  dev:
+    mode: development
+    default: true
+    workspace:
+      host: https://dbc-d237e3ff-e588.cloud.databricks.com
+
+  prod:
+    mode: production
+    workspace:
+      host: https://dbc-d237e3ff-e588.cloud.databricks.com
+      root_path: /Users/vagamondairies2025@gmail.com/.bundle/${bundle.name}/${bundle.target}
+    run_as:
+      user_name: vagamondairies2025@gmail.com
+
+resources:
+  jobs:
+    read_and_create:
+      name: medilion_job
+      tasks:
+        - task_key: first_task
+          notebook_task:
+            notebook_path: /Workspace/Users/vagamondairies2025@gmail.com/Data-Engineer-Learning-Plan/Automated Deployment with Databricks Asset Bundles/deploying_to_multiple_environments/bronze
+          existing_cluster_id: a8aa010f5d7168bd
+        - task_key: second_task
+          notebook_task:
+            notebook_path: /Workspace/Users/vagamondairies2025@gmail.com/Data-Engineer-Learning-Plan/Automated Deployment with Databricks Asset Bundles/deploying_to_multiple_environments/silver
+          existing_cluster_id: a8aa010f5d7168bd
+
+variables:
+  dev_catalog:
+    default: 'dev'
+  prod_catalog:
+    default: 'prod'

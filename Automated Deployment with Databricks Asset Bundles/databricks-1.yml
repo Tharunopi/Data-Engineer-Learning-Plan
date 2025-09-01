@@ -1,6 +1,9 @@
 bundle:
   name: demo_bundle
 
+include:
+  - resources/*.yml
+
 resources:
   jobs:
     bronze:
@@ -8,15 +11,13 @@ resources:
       tasks:
         - task_key: create_bronze_table
           notebook_task:
-            notebook_path: /Workspace/Users/341memories@gmail.com/Data-Engineer-Learning-Plan/Automated
-              Deployment with Databricks Asset Bundles/create_bronze
+            notebook_path: /Workspace/Users/vagamondairies2025@gmail.com/Data-Engineer-Learning-Plan/Automated Deployment with Databricks Asset Bundles/create_bronze
             source: WORKSPACE
         - task_key: create_silver_table
           depends_on:
             - task_key: create_bronze_table
           notebook_task:
-            notebook_path: /Workspace/Users/341memories@gmail.com/Data-Engineer-Learning-Plan/Automated
-              Deployment with Databricks Asset Bundles/create_silver
+            notebook_path: /Workspace/Users/vagamondairies2025@gmail.com/Data-Engineer-Learning-Plan/Automated Deployment with Databricks Asset Bundles/create_silver
             source: WORKSPACE
       queue:
         enabled: true
