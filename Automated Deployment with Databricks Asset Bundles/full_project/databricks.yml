@@ -1,0 +1,64 @@
+bundle:
+  name: crypto_etl
+
+targets:
+
+  development:
+    default: true
+    mode: development
+
+    resources:
+      jobs:
+        crypto_etl_job:
+          name: run_in_dev_env
+          tasks:
+            - task_id: unit_tests
+              notebook_task:
+                notebook_path: ''
+              existing_cluster_id: ${var.cluster_id}
+            - task_id: visual
+              depends_on:
+                - task_id: unit_tests
+              notebook_task:
+                notebook_path: ''
+              existing_cluster_id: ${var.cluster_id}
+    
+    variables:
+      cluster_id: 'a8aa010f5d7168bd'
+            
+    workspace:
+      root_path: /Workspace/Users/vagamondairies2025@gmail.com
+
+  stage:
+    mode: development
+
+    resources:
+      jobs:
+        crypto_etl_job:
+          name: run_in_stage_env
+          tasks:
+            - task_id: unit_tests
+              notebook_task:
+                notebook_path: ''
+              existing_cluster_id: ${var.cluster_id}
+            - task_id: visual
+              depends_on:
+                - task_id: unit_tests
+              notebook_task:
+                notebook_path: ''
+              existing_cluster_id: ${var.cluster_id}
+    
+    variables:
+      cluster_id: 'a8aa010f5d7168bd'
+
+    workspace:
+      root_path: /Workspace/Users/vagamondairies2025@gmail.com
+
+  production:
+    mode: production
+
+    workspace:
+      root_path: /Workspace/Users/vagamondairies2025@gmail.com
+
+    variables:
+      cluster_type: 'serverless'
